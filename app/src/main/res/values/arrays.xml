@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="my_array" >
+        <item>
+            Toshkent
+        </item>
+
+        <item>
+            Samarqand
+        </item>
+
+        <item>
+            Navoiy
+        </item>
+    </string-array>
+</resources>
