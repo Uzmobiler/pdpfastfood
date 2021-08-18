@@ -6,17 +6,27 @@
     android:layout_height="match_parent"
     tools:context=".ui.home.HomeFragment">
 
-    <TextView
-        android:id="@+id/text_home"
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_bar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <nl.joery.animatedbottombar.AnimatedBottomBar
+        android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
+        app:abb_selectedTabType="text"
+        app:abb_selectedIndex="0"
+        app:abb_indicatorAppearance="round"
+        app:abb_indicatorMargin="@dimen/_4sdp"
+        app:abb_indicatorHeight="@dimen/_3sdp"
+        app:abb_indicatorColor="@color/yellow"
+        app:abb_tabColor="@color/grey"
+        app:abb_tabColorSelected="@color/yellow"
+        app:abb_tabs="@menu/bottom_menu"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/view_pager" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

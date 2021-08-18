@@ -8,38 +8,36 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
+import nl.joery.animatedbottombar.AnimatedBottomBar
 import uz.mobiler.pdpfastfood.R
+import uz.mobiler.pdpfastfood.adapters.ViewPagerAdapter
 import uz.mobiler.pdpfastfood.databinding.FragmentHomeBinding
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(R.layout.fragment_home) {
 
-    private lateinit var homeViewModel: HomeViewModel
-    private var _binding: FragmentHomeBinding? = null
+    private val binding by viewBinding(FragmentHomeBinding::bind)
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    private lateinit var viewPagerAdapter: ViewPagerAdapter
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        homeViewModel =
-            ViewModelProvider(this).get(HomeViewModel::class.java)
+        binding.apply {
 
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+            viewPagerAdapter = ViewPagerAdapter(this@HomeFragment)
+            viewPager.adapter = viewPagerAdapter
+            viewPager.isUserInputEnabled = false
 
-        val textView: TextView = binding.textHome
-        homeViewModel.text.observe(viewLifecycleOwner, Observer {
-            textView.text = it
-        })
-        return root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+            bottomBar.setOnTabSelectListener(object : AnimatedBottomBar.OnTabSelectListener {
+                override fun onTabSelected(
+                    lastIndex: Int,
+                    lastTab: AnimatedBottomBar.Tab?,
+                    newIndex: Int,
+                    newTab: AnimatedBottomBar.Tab
+                ) {
+                    viewPager.currentItem = newIndex
+                }
+            })
+        }
     }
 }
