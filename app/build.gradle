@@ -63,4 +63,13 @@ dependencies {
 
     // tabscrollattacher
     implementation 'com.github.iammert:TabScrollAttacher:1.0.2'
+
+    // pinlockview
+    implementation 'com.andrognito.pinlockview:pinlockview:2.1.0'
+
+    // blur layout
+    implementation 'io.alterac.blurkit:blurkit:1.1.0'
+
+    // stepper
+    implementation 'com.github.DanielMartinus:Stepper-Touch:1.0.1'
 }

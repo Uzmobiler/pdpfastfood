@@ -5,11 +5,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.iammert.tabscrollattacherlib.TabScrollAttacher
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import uz.mobiler.pdpfastfood.R
 import uz.mobiler.pdpfastfood.adapters.ProductAdapter
 import uz.mobiler.pdpfastfood.databinding.FragmentMenuBinding
+import uz.mobiler.pdpfastfood.models.Product
 import uz.mobiler.pdpfastfood.utils.getCategories
 import uz.mobiler.pdpfastfood.utils.getProducts
 
@@ -23,7 +25,11 @@ class MenuFragment : Fragment(R.layout.fragment_menu) {
         super.onViewCreated(view, savedInstanceState)
         val list = listOf(0, 10, 20, 30, 40, 100)
 
-        productAdapter = ProductAdapter(getProducts())
+        productAdapter = ProductAdapter(getProducts(), object : ProductAdapter.OnItemClickListener {
+            override fun onItemClick(product: Product) {
+                findNavController().navigate(R.id.productFragment)
+            }
+        })
         binding.apply {
             rv.adapter = productAdapter
             getCategories().forEach {

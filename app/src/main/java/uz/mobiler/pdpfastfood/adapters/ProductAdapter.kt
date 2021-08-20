@@ -6,8 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import uz.mobiler.pdpfastfood.databinding.ItemProductBinding
 import uz.mobiler.pdpfastfood.models.Product
+import uz.mobiler.pdpfastfood.utils.onClick
 
-class ProductAdapter(var list: List<Product>) : RecyclerView.Adapter<ProductAdapter.Vh>() {
+class ProductAdapter(var list: List<Product>, val listener: OnItemClickListener) :
+    RecyclerView.Adapter<ProductAdapter.Vh>() {
 
 
     inner class Vh(var itemProductBinding: ItemProductBinding) :
@@ -18,6 +20,8 @@ class ProductAdapter(var list: List<Product>) : RecyclerView.Adapter<ProductAdap
                 val a = product.nowPrice.toString()
                 val b = Html.fromHtml("<del>$a</del>")
                 lastRate.text = b
+
+                card.onClick { listener.onItemClick(product) }
             }
         }
     }
@@ -31,4 +35,8 @@ class ProductAdapter(var list: List<Product>) : RecyclerView.Adapter<ProductAdap
     }
 
     override fun getItemCount(): Int = list.size
+
+    interface OnItemClickListener {
+        fun onItemClick(product: Product)
+    }
 }

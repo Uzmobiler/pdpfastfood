@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profile.LockViewFragment">
+
+    <TextView
+        android:id="@+id/profile_name"
+        android:layout_width="256dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
+        android:gravity="center"
+        android:maxLines="1"
+        android:text="Pin-kodni kiriting"
+        android:textColor="@color/text_color"
+        android:textSize="34sp" />
+
+    <com.andrognito.pinlockview.IndicatorDots
+        android:id="@+id/indicator_dots"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:layout_below="@id/profile_name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
+        android:gravity="center"
+        app:dotDiameter="12dp"
+        app:dotEmptyBackground="@drawable/empty_pin"
+        app:dotFilledBackground="@drawable/filled_pin"
+        app:dotSpacing="16dp" />
+
+    <com.andrognito.pinlockview.PinLockView
+        android:id="@+id/pin_lock_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/indicator_dots"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="16dp"
+        app:indicatorType="fillWithAnimation"
+        app:keypadButtonSize="@dimen/_72sdp"
+        app:keypadShowDeleteButton="true"
+        app:keypadTextColor="@color/text_color"
+        app:keypadTextSize="@dimen/_25sdp" />
+
+</RelativeLayout>

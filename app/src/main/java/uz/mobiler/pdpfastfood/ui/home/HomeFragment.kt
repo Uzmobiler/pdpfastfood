@@ -24,7 +24,7 @@ class HomeFragment : Fragment(R.layout.fragment_home) {
 
         binding.apply {
 
-            viewPagerAdapter = ViewPagerAdapter(this@HomeFragment)
+            viewPagerAdapter = ViewPagerAdapter(requireActivity())
             viewPager.adapter = viewPagerAdapter
             viewPager.isUserInputEnabled = false
 

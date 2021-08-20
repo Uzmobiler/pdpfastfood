@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
 import uz.mobiler.pdpfastfood.R
 import uz.mobiler.pdpfastfood.adapters.ProductAdapter
@@ -21,7 +22,11 @@ class MainFragment : Fragment(R.layout.fragment_main) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        productAdapter = ProductAdapter(getProducts())
+        productAdapter = ProductAdapter(getProducts(), object :ProductAdapter.OnItemClickListener{
+            override fun onItemClick(product: Product) {
+                findNavController().navigate(R.id.productFragment)
+            }
+        })
         binding.apply {
             rv.adapter = productAdapter
         }
