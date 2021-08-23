@@ -19,11 +19,11 @@ class LanguageFragment : Fragment(R.layout.fragment_language) {
 
         binding.apply {
             uzBtn.setOnClickListener {
-                findNavController().navigate(R.id.action_languageFragment_to_registerFragment)
+                findNavController().navigate(R.id.phoneFragment)
             }
 
             ruBtn.setOnClickListener {
-                findNavController().navigate(R.id.action_languageFragment_to_registerFragment)
+                findNavController().navigate(R.id.phoneFragment)
             }
         }
 

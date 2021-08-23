@@ -11,21 +11,30 @@
         android:label="fragment_language"
         tools:layout="@layout/fragment_language" >
         <action
-            android:id="@+id/action_languageFragment_to_registerFragment"
-            app:destination="@id/registerFragment" />
+            android:id="@+id/action_languageFragment_to_phoneFragment"
+            app:destination="@id/phoneFragment" />
     </fragment>
     <fragment
         android:id="@+id/registerFragment"
         android:name="uz.mobiler.pdpfastfood.ui.login.RegisterFragment"
         android:label="fragment_register"
-        tools:layout="@layout/fragment_register" >
-        <action
-            android:id="@+id/action_registerFragment_to_confirmFragment"
-            app:destination="@id/confirmFragment" />
-    </fragment>
+        tools:layout="@layout/fragment_register" />
     <fragment
         android:id="@+id/confirmFragment"
         android:name="uz.mobiler.pdpfastfood.ui.login.ConfirmFragment"
         android:label="fragment_confirm"
-        tools:layout="@layout/fragment_confirm" />
+        tools:layout="@layout/fragment_confirm" >
+        <action
+            android:id="@+id/action_confirmFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/phoneFragment"
+        android:name="uz.mobiler.pdpfastfood.ui.login.PhoneFragment"
+        android:label="fragment_phone"
+        tools:layout="@layout/fragment_phone" >
+        <action
+            android:id="@+id/action_phoneFragment_to_confirmFragment"
+            app:destination="@id/confirmFragment" />
+    </fragment>
 </navigation>
