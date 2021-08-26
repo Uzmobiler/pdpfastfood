@@ -2,39 +2,47 @@ package uz.mobiler.pdpfastfood.ui.login
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.core.os.bundleOf
+import androidx.core.widget.addTextChangedListener
+import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.zhuinden.fragmentviewbindingdelegatekt.viewBinding
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import uz.mobiler.pdpfastfood.App
 import uz.mobiler.pdpfastfood.MainActivity
 import uz.mobiler.pdpfastfood.R
 import uz.mobiler.pdpfastfood.databinding.FragmentConfirmBinding
-import uz.mobiler.pdpfastfood.utils.onClick
+import uz.mobiler.pdpfastfood.storage.DataStoreManager
+import uz.mobiler.pdpfastfood.utils.Status
+import uz.mobiler.pdpfastfood.utils.showToast
+import uz.mobiler.pdpfastfood.viewmodels.auth.AuthViewModel
+import javax.inject.Inject
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [ConfirmFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class ConfirmFragment : Fragment(R.layout.fragment_confirm) {
 
     private val binding by viewBinding(FragmentConfirmBinding::bind)
+    private lateinit var phone: String
 
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
+    @Inject
+    lateinit var authViewModel: AuthViewModel
 
+    @Inject
+    lateinit var dataStoreManager: DataStoreManager
+
+    private val TAG = "ConfirmFragment"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        App.app.applicationComponent.inject(this)
+
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
+            phone = it.getString("phone", "")
         }
     }
 
@@ -42,30 +50,54 @@ class ConfirmFragment : Fragment(R.layout.fragment_confirm) {
         super.onViewCreated(view, savedInstanceState)
 
         binding.apply {
-            resendTv.onClick {
-                val intent = Intent(requireActivity(), MainActivity::class.java)
-                startActivity(intent)
+            authViewModel.checkPhone(phone)
+                .observe(viewLifecycleOwner, Observer {
+                    when (it.status) {
+                        Status.LOADING -> {
+
+                        }
+                        Status.SUCCESS -> {
+                            requireContext().showToast(it.data?.message ?: "")
+                        }
+                        Status.ERROR -> {
+                            requireContext().showToast(it.message ?: "")
+                        }
+                    }
+                })
+
+            codeEt.addTextChangedListener {
+                val code = it.toString()
+                if (code.length == 6) {
+                    authViewModel.checkCode(code, phone).observe(viewLifecycleOwner, Observer {
+                        when (it.status) {
+                            Status.LOADING -> {
+
+                            }
+                            Status.SUCCESS -> {
+                                if (it.data?.data?.registered == true) {
+                                    val accessToken = it.data.data.accessToken
+                                    val refreshToken = it.data.data.refreshToken
+
+                                    GlobalScope.launch {
+                                        dataStoreManager.setAccessToken(accessToken)
+                                        Log.d(TAG, "onViewCreated: ${dataStoreManager.getAccessToken.firstOrNull() ?: ""}")
+                                    }
+                                    val intent =
+                                        Intent(requireActivity(), MainActivity::class.java)
+                                    startActivity(intent)
+                                } else {
+                                    val bundle = bundleOf("phone" to phone, "code" to code)
+                                    findNavController().navigate(R.id.registerFragment, bundle)
+                                }
+                            }
+                            Status.ERROR -> {
+                                requireContext().showToast(it.message ?: "")
+                            }
+                        }
+                    })
+                }
             }
         }
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment ConfirmFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            ConfirmFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

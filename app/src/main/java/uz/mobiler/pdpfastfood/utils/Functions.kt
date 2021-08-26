@@ -3,6 +3,9 @@ package uz.mobiler.pdpfastfood.utils
 import android.content.Context
 import android.view.View
 import android.widget.Toast
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import uz.mobiler.pdpfastfood.models.BranchData
 import uz.mobiler.pdpfastfood.models.Product
 
@@ -12,6 +15,16 @@ fun Context.showToast(message: String) {
 
 fun View.onClick(listener: (View) -> Unit) {
     this.setOnClickListener { listener.invoke(it) }
+}
+
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
+
+fun getDate(a: Int): String {
+    return if (a < 10) {
+        "0$a"
+    } else {
+        "$a"
+    }
 }
 
 

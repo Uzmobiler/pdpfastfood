@@ -1,6 +1,8 @@
 package uz.mobiler.pdpfastfood.di.module
 
 import android.content.Context
+import androidx.datastore.core.DataStore
+import androidx.datastore.dataStore
 import dagger.Module
 import dagger.Provides
 import okhttp3.OkHttpClient
@@ -8,6 +10,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import uz.mobiler.pdpfastfood.network.AuthService
+import uz.mobiler.pdpfastfood.network.RegionService
 import uz.mobiler.pdpfastfood.utils.NetworkHelper
 import javax.inject.Singleton
 
@@ -55,4 +58,10 @@ class NetworkModule(var context: Context) {
     @Provides
     @Singleton
     fun provideAuthService(retrofit: Retrofit) = retrofit.create(AuthService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideRegionService(retrofit: Retrofit) = retrofit.create(RegionService::class.java)
+
+
 }

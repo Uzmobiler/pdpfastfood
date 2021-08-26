@@ -15,35 +15,8 @@
         android:textColor="@color/text_color"
         android:textSize="@dimen/_18sdp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/l1"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/l1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@id/l2"
-        app:layout_constraintTop_toBottomOf="@id/tv1">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Telefon raqamingiz" />
-
-        <br.com.sapereaude.maskedEditText.MaskedEditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:background="@drawable/edit_text_background"
-            android:hint="1234567890"
-            android:inputType="phone"
-            android:padding="@dimen/_10sdp"
-            app:allowed_chars="1234567890"
-            app:keep_hint="true"
-            app:mask="(+998 ##) ###-##-##" />
-
-    </LinearLayout>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/l2"
@@ -51,7 +24,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toTopOf="@id/l3"
-        app:layout_constraintTop_toBottomOf="@id/l1">
+        app:layout_constraintTop_toBottomOf="@id/tv1">
 
         <TextView
             android:layout_width="wrap_content"
@@ -59,6 +32,7 @@
             android:text="Isminggiz" />
 
         <EditText
+            android:id="@+id/full_name_et"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
@@ -68,7 +42,7 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/l3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -77,20 +51,39 @@
         app:layout_constraintTop_toBottomOf="@id/l2">
 
         <TextView
+            android:id="@+id/birth_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tug’ilgan sana" />
+            android:text="Tug’ilgan sana"
+            app:layout_constraintBottom_toTopOf="@id/birth_date"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <EditText
+        <br.com.sapereaude.maskedEditText.MaskedEditText
+            android:id="@+id/birth_date"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/edit_text_background"
-            android:hint="KK.OO.YYYY"
+            android:hint="KKOOYYYY"
             android:inputType="date"
-            android:padding="@dimen/_10sdp" />
+            android:padding="@dimen/_10sdp"
+            app:allowed_chars="1234567890"
+            app:keep_hint="true"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/birth_tv"
+            app:mask="##.##.####" />
 
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/calendar_img"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/ic_calendar"
+            app:layout_constraintBottom_toBottomOf="@id/birth_date"
+            app:layout_constraintRight_toRightOf="@id/birth_date"
+            app:layout_constraintTop_toTopOf="@id/birth_date" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <LinearLayout
         android:id="@+id/l4"
@@ -112,6 +105,7 @@
             android:background="@drawable/edit_text_background">
 
             <Spinner
+                android:id="@+id/region_spinner"
                 style="@style/SpinnerTheme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -131,11 +125,11 @@
         app:layout_constraintTop_toBottomOf="@id/l4">
 
         <CheckBox
-            android:minWidth="0dp"
-            android:minHeight="0dp"
             android:id="@+id/checkbox"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:minWidth="0dp"
+            android:minHeight="0dp" />
 
         <TextView
             android:id="@+id/tv"

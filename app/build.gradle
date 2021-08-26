@@ -96,4 +96,7 @@ dependencies {
     // logging interceptor
     implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
 
+    // data store
+    implementation "androidx.datastore:datastore-preferences:1.0.0"
+    implementation "androidx.datastore:datastore:1.0.0"
 }
